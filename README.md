@@ -152,6 +152,19 @@ Verificado:
 - Las seis páginas públicas y las cinco legales devuelven 200; `/legal` redirige.
 - Los cinco enlaces legales del pie apuntan a rutas que existen.
 - Colores, tipografía y componentes comprobados contra los valores del design system con estilos computados en el navegador.
+- Smoke check contra producción: las ocho rutas responden 200 y el 404 devuelve 404.
+
+## Producción
+
+- Web: [`https://eterlia.aleixaj.com`](https://eterlia.aleixaj.com)
+- URL del worker: [`https://eterlia.aleixauque.workers.dev`](https://eterlia.aleixauque.workers.dev)
+
+Notas de despliegue:
+
+- Desplegado en Cloudflare Workers, conectado a este repositorio: cada push a `main` dispara un build.
+- Cloudflare detecta Next.js y aplica el adaptador [OpenNext](https://opennext.js.org/cloudflare) por su cuenta, así que el repositorio no lleva `wrangler.jsonc` ni configuración de Cloudflare. Las respuestas lo confirman con la cabecera `x-opennext: 1`.
+- El subdominio se asigna desde el propio worker: **Compute → Workers & Pages → eterlia → Domains → Add Domain**. Al estar `aleixaj.com` en la misma cuenta, Cloudflare crea el registro DNS y el certificado solo.
+- Las páginas se sirven prerenderizadas (`x-nextjs-prerender: 1`), con revalidación a los 300 s.
 
 ## Iconografía
 
@@ -171,4 +184,3 @@ Los cinco documentos viven en [`src/data/legal.ts`](src/data/legal.ts) y se sirv
 - **Cuenta y admin.** Diseñadas en Claude Design, sin implementar.
 - **Envío de formularios.** Encargos y contacto validan y confirman en pantalla, pero no hay endpoint detrás.
 - **Fotografía de producto.** Los huecos están reservados con su proporción.
-- **Despliegue.** Todavía no hay entorno de producción.
