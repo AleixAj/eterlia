@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Tokens del design system de Eterlia.
+   En Tailwind 4 la configuración vive aquí: cada entrada de @theme genera a la
+   vez una variable CSS (--color-granate-900) y su utilidad (bg-granate-900).
+   Los hex son los del brief: no se aproximan nunca.
+--------------------------------------------------------------------------- */
+@theme {
+  /* Paleta base */
+  --color-ocre-100: #f5ede0;
+  --color-ocre-200: #e9dcc5;
+  --color-sand-300: #d6c6aa;
+  --color-granate-900: #3a0e1b;
+  --color-granate-700: #5c1a2e;
+  --color-ink-900: #1a1a1a;
+  --color-ink-600: #4a4448; /* solo texto apagado */
+  --color-ink-400: #7c7378; /* solo pies de foto y estados desactivados */
+
+  /* Superficies semánticas */
+  --color-page: var(--color-ocre-100);
+  --color-alt: var(--color-ocre-200);
+  --color-field: #ffffff; /* el blanco solo aparece en los campos de formulario */
+  --color-hairline: var(--color-sand-300);
+
+  /* Tipografías (las carga next/font en layout.tsx) */
+  --font-serif: var(--font-playfair), "Times New Roman", Georgia, serif;
+  --font-sans: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+
+  /* Escala tipográfica — base 17px */
+  --text-hero: 78px;
+  --text-hero--line-height: 1.06;
+  --text-display: 62px;
+  --text-display--line-height: 1.06;
+  --text-h1: 40px;
+  --text-h1--line-height: 1.18;
+  --text-h2: 30px;
+  --text-h2--line-height: 1.18;
+  --text-h3: 24px;
+  --text-h3--line-height: 1.35;
+  --text-h4: 20px;
+  --text-h4--line-height: 1.35;
+  --text-lead: 18px;
+  --text-lead--line-height: 1.62;
+  --text-base: 17px;
+  --text-base--line-height: 1.62;
+  --text-sm: 15px;
+  --text-sm--line-height: 1.62;
+  --text-caption: 13px;
+  --text-caption--line-height: 1.5;
+  --text-overline: 11px;
+  --text-overline--line-height: 1.4;
+
+  --leading-display: 1.06;
+  --leading-heading: 1.18;
+  --leading-body: 1.62;
+  --leading-tight: 1.35;
+
+  --tracking-display: 0.005em;
+  --tracking-heading: 0.01em;
+  --tracking-overline: 0.18em;
+  --tracking-button: 0.08em;
+
+  /* Nada es redondo en esta marca: 3px es el techo */
+  --radius-sm: 2px;
+  --radius-md: 3px;
+
+  /* Una sola sombra permitida, y casi no se ve */
+  --shadow-lift: 0 1px 2px rgb(58 14 27 / 0.06);
+
+  /* Anchos de contenedor */
+  --container-wide: 1200px;
+  --container-narrow: 680px;
+  --container-prose: 620px;
+
+  /* Movimiento */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---------------------------------------------------------------------------
+   Reset de elementos. Equivale a tokens/base.css del design system.
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background: var(--color-page);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-body);
+    text-wrap: pretty;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-granate-900);
+    font-family: var(--font-serif);
+    font-weight: 400; /* sin negritas, nunca */
+    letter-spacing: var(--tracking-heading);
+  }
+
+  ::selection {
+    background: var(--color-sand-300);
+    color: var(--color-granate-900);
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--color-ocre-100),
+      0 0 0 3px var(--color-granate-900);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Dos utilidades propias que se repiten en todas las pantallas.
+--------------------------------------------------------------------------- */
+@utility et-overline {
+  font-size: var(--text-overline);
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+}
+
+/* El borde enfático del sistema. Tailwind no genera `border-[1.5px]` desde un
+   valor arbitrario sin tipo, así que el ancho se declara aquí. */
+@utility border-strong {
+  border-width: 1.5px;
+}
+
+@utility border-l-strong {
+  border-left-width: 1.5px;
+}
+
+/* Título de página o de sección: Playfair en cursiva, el "tono display" de la marca */
+@utility display-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: var(--tracking-display);
+}
